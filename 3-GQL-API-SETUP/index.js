@@ -32,6 +32,7 @@ const resolvers = {
     teams: () => database.teams
   }
 }
+
 const server = new ApolloServer({ typeDefs, resolvers })
 server.listen().then(({ url }) => {
 console.log(`🚀 서버 준비 완료 ➡️ ${url}`)
