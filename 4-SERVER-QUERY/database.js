@@ -8,6 +8,7 @@ const database = {
   equipments: [],
   supplies: []
 }
+
 Object.keys(database).forEach((key) => {
   database[key] = [
     ...database[key], 
