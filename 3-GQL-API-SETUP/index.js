@@ -2,9 +2,13 @@
 
 const database = require('./database')
 
-
+// ✨ ApolloServer
+// typeDef와 resolver를 인자로 받아 서버 생성
 const { ApolloServer, gql } = require('apollo-server')
 
+// ✨ typeDef
+// GraphQL 명세에서 사용될 데이터, 요청의 타입 지정
+// gql로 생성됨
 const typeDefs = gql`
   type Query {
     teams: [Team]
@@ -20,6 +24,9 @@ const typeDefs = gql`
   }
 `
 
+// ✨ resolver
+// 서비스의 액션을 함수로 지정
+// 요청에 따라 데이터를 반환, 입력, 수정, 삭제
 const resolvers = {
   Query: {
     teams: () => database.teams
