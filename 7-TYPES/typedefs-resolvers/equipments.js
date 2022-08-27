@@ -7,7 +7,14 @@ const typeDefs = gql`
         id: String
         used_by: String
         count: Int
-        new_or_used: String
+        new_or_used: NewOrUsed
+    }
+    type EquipmentAdv {
+        id: ID!
+        used_by: String!
+        count: Int!
+        use_rate: Float
+        is_new: Boolean!
     }
 `
 const resolvers = {
@@ -20,7 +27,7 @@ const resolvers = {
                 }
                 equipment.is_new = equipment.new_or_used === 'new'
                 return equipment
-            }),
+            })
     },
     Mutation: {
         deleteEquipment: (parent, args) => dbWorks.deleteItem('equipments', args),
