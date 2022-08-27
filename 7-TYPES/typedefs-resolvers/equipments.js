@@ -15,6 +15,7 @@ const typeDefs = gql`
         count: Int!
         use_rate: Float
         is_new: Boolean!
+        users: [String!]
     }
 `
 const resolvers = {
@@ -26,6 +27,14 @@ const resolvers = {
                     equipment.use_rate = Math.random().toFixed(2)
                 }
                 equipment.is_new = equipment.new_or_used === 'new'
+                if (Math.random() > 0.5) {
+                    equipment.users = []
+                    dbWorks.getPeople(args).forEach((person) => {
+                        if (person.role === equipment.used_by && Math.random() < 0.2) {
+                            equipment.users.push(person.last_name)
+                        }
+                    })
+                }
                 return equipment
             })
     },
