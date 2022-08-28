@@ -18,6 +18,7 @@ const typeDefs = gql`
         users: [String!]
     }
 `
+
 const resolvers = {
     Query: {
         equipments: (parent, args) => dbWorks.getEquipments(args),
