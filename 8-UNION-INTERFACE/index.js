@@ -7,6 +7,8 @@ const equipments = require('./typedefs-resolvers/equipments')
 const softwares = require('./typedefs-resolvers/softwares')
 const supplies = require('./typedefs-resolvers/supplies')
 const givens = require('./typedefs-resolvers/givens')
+const tools = require('./typedefs-resolvers/tools')
+const people = require('./typedefs-resolvers/people')
 
 const typeDefs = [
     queries,
@@ -15,14 +17,18 @@ const typeDefs = [
     equipments.typeDefs,
     softwares.typeDefs,
     supplies.typeDefs,
-    givens.typeDefs
+    givens.typeDefs,
+    tools.typeDefs,
+    people.typeDefs
 ]
 
 const resolvers = [
     equipments.resolvers,
     softwares.resolvers,
     supplies.resolvers,
-    givens.resolvers
+    givens.resolvers,
+    tools.resolvers,
+    people.resolvers
 ]
 
 const server =  new ApolloServer({typeDefs, resolvers})
