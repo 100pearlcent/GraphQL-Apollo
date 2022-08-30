@@ -1,10 +1,44 @@
 import './components.css';
+import { useState } from 'react';
+import { useQuery, gql } from '@apollo/client';
+
+const GET_ROLES = gql`
+    query GetRoles {
+        roles {
+            id
+        }
+    }
+`;
 
 function Roles() {
+    const [contentId, setContentId] = useState('');
 
-    function AsideItems () {
-        return (<div></div>);
+function AsideItems () {
+    const roleIcons = {
+      developer: '💻',
+      designer: '🎨',
+      planner: '📝'
     }
+
+    const { loading, error, data } = useQuery(GET_ROLES);
+
+    if (loading) return <p className="loading">Loading...</p>
+    if (error) return <p className="error">Error T_T</p>
+
+    return (
+      <ul>
+        {data.roles.map(({id}) => {
+          return (
+            <li key={id} className={'roleItem ' +  (contentId === 'id' ? 'on' : '')}
+            onClick={() => {setContentId(id)}}>
+              <span>{contentId === id ? '🔲' : '⬛'}</span>
+              {roleIcons[id]} {id}
+            </li>
+          )
+        })}
+      </ul>
+    );
+  }
 
     function MainContents () {
         return (<div></div>);
