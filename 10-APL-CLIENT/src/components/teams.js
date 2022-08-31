@@ -39,8 +39,22 @@ const DELETE_TEAM = gql`
   }
 `
 
-function Teams() {
+const EDIT_TEAM = gql`
+  mutation EditTeam($id: ID!, $input: PostTeamInput!) {
+    editTeam(id: $id, input: $input) {
+      id,
+      manager,
+      office,
+      extension_number,
+      mascot,
+      cleaning_duty,
+      project
+    }
+  }
+`
 
+
+function Teams() {
 
   function execDeleteTeam () {
     if (window.confirm('이 항목을 삭제하시겠습니까?')) {
@@ -49,11 +63,28 @@ function Teams() {
   }
   const [deleteTeam] = useMutation(
   DELETE_TEAM, { onCompleted: deleteTeamCompleted })
+
   function deleteTeamCompleted (data) {
     console.log(data.deleteTeam)
     alert(`${data.deleteTeam.id} 항목이 삭제되었습니다.`)
     refetchTeams()
     setContentId(0)
+  }
+
+  function execEditTeam () {
+    editTeam({
+      variables: {  
+        id: contentId,
+        input: inputs }
+      })
+  }
+  const [editTeam] = useMutation(
+    EDIT_TEAM, { onCompleted: editTeamCompleted }) 
+
+  function editTeamCompleted (data) {
+    console.log(data.editTeam)
+    alert(`${data.editTeam.id} 항목이 수정되었습니다.`)
+    refetchTeams()
   }
 
   const [contentId, setContentId] = useState(0)
@@ -186,7 +217,7 @@ function MainContents () {
           </div>
           ) : (
           <div className="buttons">
-            <button onClick={() => {}}>Modify</button>
+            <button onClick={(execEditTeam) => {}}>Modify</button>
             <button onClick={(execDeleteTeam) => {}}>Delete</button>
             <button onClick={() => {setContentId(0)}}>New</button>
           </div>
