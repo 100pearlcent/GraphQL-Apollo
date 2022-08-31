@@ -2,35 +2,58 @@ import './components.css';
 import { useState } from 'react';
 import { useQuery, useMutation, gql } from '@apollo/client' 
 
-function Teams() {
-    const GET_TEAMS = gql`
-    query GetTeams {
-    teams {
-        id
-        manager
-        members {
-            id
-            first_name
-            last_name
-            role
-        }
-        }
-    }
-    `;
+const GET_TEAMS = gql`
+  query GetTeams {
+  teams {
+      id
+      manager
+      members {
+          id
+          first_name
+          last_name
+          role
+      }
+      }
+  }
+`;
 
-    const GET_TEAM = gql`
-    query GetTeam($id: ID!) {
-    team(id: $id) {
-        id
-        manager
-        office
-        extension_number
-        mascot
-        cleaning_duty
-        project
-        }
+const GET_TEAM = gql`
+  query GetTeam($id: ID!) {
+  team(id: $id) {
+      id
+      manager
+      office
+      extension_number
+      mascot
+      cleaning_duty
+      project
+      }
+  }
+`;
+
+const DELETE_TEAM = gql`
+  mutation DeleteTeam($id: ID!) {
+    deleteTeam(id: $id) {
+      id
     }
-    `;
+  }
+`
+
+function Teams() {
+
+
+  function execDeleteTeam () {
+    if (window.confirm('이 항목을 삭제하시겠습니까?')) {
+      deleteTeam({variables: {id: contentId}})
+    }
+  }
+  const [deleteTeam] = useMutation(
+  DELETE_TEAM, { onCompleted: deleteTeamCompleted })
+  function deleteTeamCompleted (data) {
+    console.log(data.deleteTeam)
+    alert(`${data.deleteTeam.id} 항목이 삭제되었습니다.`)
+    setContentId(0)
+  }
 
   const [contentId, setContentId] = useState(0)
   const [inputs, setInputs] = useState({
@@ -162,7 +185,7 @@ function MainContents () {
           ) : (
           <div className="buttons">
             <button onClick={() => {}}>Modify</button>
-            <button onClick={() => {}}>Delete</button>
+            <button onClick={(execDeleteTeam) => {}}>Delete</button>
             <button onClick={() => {setContentId(0)}}>New</button>
           </div>
           )}
