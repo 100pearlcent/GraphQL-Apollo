@@ -2,6 +2,27 @@ import './components.css';
 import { useState } from 'react';
 import { useQuery, useMutation, gql } from '@apollo/client';
 
+const Names = gql`
+  fragment names on People {
+    first_name
+    last_name
+  }
+`
+const HealthInfo = gql`
+  fragment healthInfo on People {
+    sex
+    blood_type
+  }
+`
+const WorkInfo = gql`
+  fragment workInfo on People {
+    serve_years
+    role
+    team
+    from
+  }
+`
+
 const GET_PEOPLE = gql`
   query GetPeople {
   people {
