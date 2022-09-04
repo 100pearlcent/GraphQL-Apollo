@@ -27,26 +27,21 @@ const GET_PEOPLE = gql`
   query GetPeople {
   people {
     id
-    first_name
-    last_name
-    sex
-    blood_type
+    ...names
+    ...healthInfo
     }
   }
+  ${Names}
+  ${HealthInfo}
 `;
 
 const GET_PERSON = gql`
   query GetPerson($id: ID!) {
     person(id: $id) {
       id
-      first_name
-      last_name
-      sex
-      blood_type
-      serve_years
-      role
-      team
-      from
+      ...names
+      ...healthInfo
+      ...workInfo
       tools {
         __typename
         ... on Software {
@@ -59,6 +54,9 @@ const GET_PERSON = gql`
       }
     }
   }
+  ${Names}
+  ${HealthInfo}
+  ${WorkInfo}
 `;
 
 const DELETE_PERSON = gql`
