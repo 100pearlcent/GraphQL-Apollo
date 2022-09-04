@@ -242,12 +242,12 @@ function MainContents () {
         </table>
         {contentId === 0 ? 
           (<div className="buttons">
-            <button onClick={(execPostTeam) => {}}>Submit</button>
+            <button onClick={execPostTeam}>Submit</button>
           </div>
           ) : (
           <div className="buttons">
-            <button onClick={(execEditTeam) => {}}>Modify</button>
-            <button onClick={(execDeleteTeam) => {}}>Delete</button>
+            <button onClick={execEditTeam}>Modify</button>
+            <button onClick={execDeleteTeam}>Delete</button>
             <button onClick={() => {setContentId(0)}}>New</button>
           </div>
           )}
